@@ -1,13 +1,18 @@
 import './App.css';
-import CalculatePay from './components/CalculatePay.js';
+import CalculatePayForm from './components/CalculatePayForm.js';
 
 function App() {
   return (
     <div className="BabysitterApp">
       <h2 className="app-title">Child's Pay</h2>
-      <CalculatePay></CalculatePay>
+      <CalculatePayForm></CalculatePayForm>
+      <button onClick={calculatePay}></button>
     </div>
   );
 }
+
+function calculatePay(){
+  return 0;
+};
 
 export default App;
