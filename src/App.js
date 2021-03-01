@@ -6,7 +6,6 @@ function App() {
     <div className="BabysitterApp">
       <h2 className="app-title">Child's Pay</h2>
       <CalculatePayForm></CalculatePayForm>
-      <button onClick={calculatePay}></button>
     </div>
   );
 }

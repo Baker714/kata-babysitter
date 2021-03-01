@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
+import './CalculatePayForm.css';
 
 class CalculatePayForm extends Component {
 
   render() {
     return (
       <form onSubmit={this.calculatePay} id="calcPayForm">
-        <label>Start Time
-          <input type="text" id="startTimeTextBox"></input>
+        <label>Start Time:
+          <input type="datetime-local" id="startTimeTextBox" />
         </label>
-        <label>Bed Time
-          <input type="text" id="bedTimeTextBox"></input>
+        <br/>
+        <br/>
+        <label>Bed Time:
+          <input type="datetime-local" id="bedTimeTextBox" />
         </label>
-        <label>End Time
-          <input type="text" id="endTimeTextBox"></input>
+        <br/>
+        <br/>
+        <label>End Time:
+          <input type="datetime-local" id="endTimeTextBox" />
         </label>
-        <input type="submit"></input>
+        <br/>
+        <br/>
+        <input type="submit" value="Calculate Pay" id="calcPayButton"/>
       </form>
     )
   }
