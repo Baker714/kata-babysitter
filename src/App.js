@@ -1,23 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import './CalculatePay.js';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="BabysitterApp">
+      <h2 className="app-title">Child's Pay</h2>
+      <form onSubmit={CalculatePay.calculatePay}>
+        <label>Start Time</label>
+        <input type="text" id=""></input>
+        <h1>Bed Time</h1>
+        <input></input>
+        <h1>End Time</h1>
+        <input></input>
+        <input type="submit"></input>
+      </form>
     </div>
   );
 }
