@@ -10,5 +10,5 @@ test('renders calculatePayForm', () => {
 test('form fields only accept time', () => {
   render(<CalculatePayForm />);
   screen.getByLabelText("Start Time").value = "8:00";
-  expect(screen.getByLabelText("Start Time").value).ToBe("8:00");
+  expect(screen.getByLabelText("Start Time").value).toBe("8:00");
 })
