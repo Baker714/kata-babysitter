@@ -57,20 +57,24 @@ class CalculatePayForm extends Component {
   validateTimes(startTime, bedTime, endTime) {
     let alertMessage = "";
 
-    if(startTime === null || endTime === null){
-      alertMessage += "Please fill in Start and End Times before submitting\n\n";
+    if(startTime === null || bedTime === null || endTime === null){
+      alertMessage += "Please fill in all fields before submitting\n\n";
     }
 
-    if(startTime < "17:00" && startTime > "03:00"){
-      alertMessage += "Start Time must be 5:00P.M or later (Cutoff at 3:00A.M.)\n\n";
+    if(startTime < "17:00" && startTime > bedTime){
+      alertMessage += "Start Time must be between 5:00P.M and Bed Time\n\n";
     }
 
     if(bedTime < startTime || bedTime > endTime){
       alertMessage += "Bed Time must be between Start Time and End Time\n\n";
     }
 
-    if(endTime < "18:00" && endTime > "04:00"){
-      alertMessage += "End Time must be 4:00A.M or earlier (Cutoff at 6:00P.M.)\n\n";
+    if(bedTime >= "12:00"){
+      alertMessage += "Bed Time must be before Midnight\n\n";
+    }
+
+    if(endTime < "12:00" && endTime > "04:00"){
+      alertMessage += "End Time must be between Midnight and 4:00A.M\n\n";
     }
 
     if(alertMessage !== ""){
@@ -85,15 +89,15 @@ class CalculatePayForm extends Component {
     return (
       <div>
         <form onSubmit={this.calculatePay} id="calcPayForm">
-          <label>Start Time:</label>
+          <label>Start Time</label>
           <TimePicker ref={this.startTimeRef} disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
           <br/>
           <br/>
-          <label>Bed Time:</label>
+          <label>Bed Time</label>
           <TimePicker id="bedTimePicker" disableClock={true} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
           <br/>
           <br/>
-          <label>End Time:</label>
+          <label>End Time</label>
           <TimePicker id="endTimePicker" disableClock={true} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
           <br/>
           <br/>
