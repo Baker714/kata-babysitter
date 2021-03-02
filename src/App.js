@@ -10,8 +10,4 @@ function App() {
   );
 }
 
-function calculatePay(){
-  return 0;
-};
-
 export default App;

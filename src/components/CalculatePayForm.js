@@ -9,13 +9,19 @@ class CalculatePayForm extends Component {
 
   constructor(props){
     super(props);
-    this.state = {startTime: '12:00', bedTime: '12:00', endTime: '12:00', amountToCharge: '45'};
+    this.state = {startTime: '', bedTime: '', endTime: '', amountToCharge: '0'};
     this.calculatePay = this.calculatePay.bind(this);
     //this.amountToCharge = React.createRef(); tried to create ref to update amountToCharge value, found better way with querySelector
   }
 
   changeStartTimeField(event){
-    this.setState({startTime: event});
+    console.log(event);
+    if(event < "17:00"){
+      alert("Start Time must be after 5:00P.M.");
+      this.setState({startTime: ''});
+    }
+    else
+      this.setState({startTime: event});
   }
 
   changeBedTimeField(event){
@@ -24,14 +30,29 @@ class CalculatePayForm extends Component {
   }
 
   changeEndTimeField(event){
-    this.setState({endTime: event});
+    console.log(event);
+    if(event > "04:00")
+      alert("End Time must be before 4:00A.M.");
+    else
+      this.setState({endTime: event});
   }
 
   calculatePay(event) {
-    let amountToCharge = 0;
-
-    document.querySelector('#amountToCharge').innerText = this.state.amountToCharge;
     event.preventDefault();
+    let amountToCharge = 0;
+    let startTime = this.state.startTime;
+    let bedTime = this.state.bedTime;
+    let endTime = this.state.endTime;
+
+    this.validateTimes(startTime, bedTime, endTime);
+
+    document.querySelector('#amountToCharge').innerText = amountToCharge;
+  }
+
+  validateTimes(startTime, bedTime, endTime) {
+
+
+
   }
 
   render() {
@@ -39,20 +60,21 @@ class CalculatePayForm extends Component {
       <div>
         <form onSubmit={this.calculatePay} id="calcPayForm">
           <label>Start Time:</label>
-          <TimePicker value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
+          <TimePicker id="startTimePicker" disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
           <br/>
           <br/>
           <label>Bed Time:</label>
-          <TimePicker value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
+          <TimePicker id="bedTimePicker" disableClock={true} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
           <br/>
           <br/>
           <label>End Time:</label>
-          <TimePicker value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
+          <TimePicker id="endTimePicker" disableClock={true} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
           <br/>
           <br/>
           <input type="submit" value="Calculate Pay" id="calcPayButton"/>
         </form>
-        <h3 id="amountToCharge"></h3>
+        <br/>
+        <div id="amountToCharge"></div>
       </div>
     )
   }
