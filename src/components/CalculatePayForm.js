@@ -37,9 +37,9 @@ class CalculatePayForm extends Component {
 
   changeEndTimeField(event){
     console.log(event);
-    if(event > "04:00")
-      alert("End Time must be before 4:00A.M.");
-    else
+    // if(event > "04:00") //Removed validation here, no way to reset timepicker easily
+    //   alert("End Time must be before 4:00A.M.");
+    // else
       this.setState({endTime: event});
   }
 
@@ -55,26 +55,30 @@ class CalculatePayForm extends Component {
   }
 
   validateTimes(startTime, bedTime, endTime) {
+    let alertMessage = "";
 
-    if(startTime === null || bedTime === null || endTime === null){
-      alert("Please fill in all fields before submitting");
-      return false;
+    if(startTime === null || endTime === null){
+      alertMessage += "Please fill in Start and End Times before submitting\n\n";
     }
 
-    if(startTime < "17:00" && startTime > "3:00"){
-      alert("Start Time must be 5:00P.M or later (Cutoff at 3:00A.M.)");
-      return false;
+    if(startTime < "17:00" && startTime > "03:00"){
+      alertMessage += "Start Time must be 5:00P.M or later (Cutoff at 3:00A.M.)\n\n";
     }
 
     if(bedTime < startTime || bedTime > endTime){
-      alert("Bed Time must be between Start Time and End Time");
+      alertMessage += "Bed Time must be between Start Time and End Time\n\n";
+    }
+
+    if(endTime < "18:00" && endTime > "04:00"){
+      alertMessage += "End Time must be 4:00A.M or earlier (Cutoff at 6:00P.M.)\n\n";
+    }
+
+    if(alertMessage !== ""){
+      alert(alertMessage);
       return false;
     }
 
-    if(endTime < "18:00" && endTime > "4:00"){
-      alert("End Time must be 4:00A.M or earlier (Cutoff at 6:00P.M.)");
-      return false;
-    }
+    return true;
   }
 
   render() {
