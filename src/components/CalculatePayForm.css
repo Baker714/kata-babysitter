@@ -1,8 +1,5 @@
-input {
+label {
   margin-left: 10px;
+  margin-right: 10px;
   font-family: sans-serif;
-}
-
-#calcPayButton{
-  margin-right: 10px
 }
