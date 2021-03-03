@@ -4,7 +4,7 @@ import CalculatePayForm from './components/CalculatePayForm.js';
 function App() {
   return (
     <div className="BabysitterApp">
-      <h2 className="app-title">Babysitter Pay</h2>
+      <div className="app-title">Babysitter Pay Calculator</div>
       <CalculatePayForm></CalculatePayForm>
     </div>
   );

@@ -56,7 +56,7 @@ class CalculatePayForm extends Component {
       amountToCharge += (timeArray.indexOf(bedTime)-timeArray.indexOf(startTime))*12;
       amountToCharge += (timeArray.indexOf("00:00")-timeArray.indexOf(bedTime))*8;
       amountToCharge += (timeArray.indexOf(endTime)-timeArray.indexOf("00:00"))*16;
-      document.querySelector('#amountToCharge').innerText = "$"+amountToCharge;
+      document.querySelector('#amountToCharge').innerText = "$"+amountToCharge.toFixed(2);
     }
   }
 
@@ -93,15 +93,15 @@ class CalculatePayForm extends Component {
 
   render() {
     return (
-      <div>
+      <div id="calcPayDiv">
         <form onSubmit={this.calculatePay} id="calcPayForm">
-          <div>Start Time: <TimePicker id="startTimePicker" disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
+          <div id="startTimeDiv">Start Time: <TimePicker id="startTimePicker" disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
           </div>
           <br/>
-          <div>Bed Time: <TimePicker id="bedTimePicker" disableClock={true} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
+          <div id="bedTimeDiv">Bed Time: <TimePicker id="bedTimePicker" disableClock={true} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
           </div>
           <br/>
-          <div>End Time: <TimePicker id="endTimePicker" disableClock={true} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
+          <div id="endTimeDiv">End Time: <TimePicker id="endTimePicker" disableClock={true} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
           </div>
           <br/>
           <input type="submit" value="Calculate Pay" id="calcPayButton"/>
