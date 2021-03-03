@@ -25,14 +25,15 @@
 
 #calcPayDiv {
   background-color: white;
-  margin-left: 28em;
-  margin-right: 28em;
+  width: 300px;
   margin-top: 6em;
   padding-top: 30px;
   padding-bottom: 40px;
   text-align: center;
   border-style: solid;
   border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #calcPayButton {
