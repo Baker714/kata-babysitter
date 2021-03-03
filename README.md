@@ -1,4 +1,11 @@
-# Babysitter Kata
+# Babysitter Kata by Andrew Baker
+
+This Kata was built entirely using the React Framework.
+
+## To Run and Test
+npm install<br>
+npm start<br>
+npm test
 
 ## Background
 This kata simulates a babysitter working and getting paid for one night.  The rules are pretty straight forward.
