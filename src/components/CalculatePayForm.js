@@ -12,7 +12,7 @@ class CalculatePayForm extends Component {
 
   constructor(props){
     super(props);
-    this.state = {startTime: "", bedTime: "", endTime: "", amountToCharge: '0'};
+    this.state = {startTime: "", bedTime: "", endTime: ""};
     this.submitForm = this.submitForm.bind(this);
     //this.amountToCharge = React.createRef(); tried to create ref to update amountToCharge value, found better way with querySelector. Update, did not find a better way
   }
@@ -21,7 +21,7 @@ class CalculatePayForm extends Component {
     this.setState({startTime: event});//tartTimeString.substring(0,2)});
   }
     //let startTimeString = event.toString(); Was going to grab only substring to account for half hours, going to do that in the calculatePay method now
-    // console.log(startTimeString.substring(0,2));
+    // console.log(startTimeHour);
     //if(event < "17:00"){
       //alert("Start Time must be after 5:00P.M.");
       // console.log(document.getElementById("startTimePicker").value); logging
@@ -36,7 +36,7 @@ class CalculatePayForm extends Component {
   changeBedTimeField(event){
     //let bedTimeString = event.toString(); Was going to convert to grab substring, unneeded now
     // console.log(event.toString());
-    this.setState({bedTime: event});//bedTimeString.substring(0,2)});
+    this.setState({bedTime: event});//bedTimeHour});
   }
 
   changeEndTimeField(event){
@@ -65,10 +65,13 @@ class CalculatePayForm extends Component {
   //Put this in its own method for easier unit testing
   calculatePay(startTimeString, bedTimeString, endTimeString){
     let amountToCharge = 0;
+    let startTimeHour = startTimeString.substring(0,2);
+    let bedTimeHour = bedTimeString.substring(0,2);
+    let endTimeHour = endTimeString.substring(0,2);
 
-    amountToCharge += (timeArray.indexOf(bedTimeString.substring(0,2))-timeArray.indexOf(startTimeString.substring(0,2)))*12;
-    amountToCharge += (timeArray.indexOf("00")-timeArray.indexOf(bedTimeString.substring(0,2)))*8;
-    amountToCharge += (timeArray.indexOf(endTimeString.substring(0,2))-timeArray.indexOf("00"))*16;
+    amountToCharge += (timeArray.indexOf(bedTimeHour)-timeArray.indexOf(startTimeHour))*12;
+    amountToCharge += (timeArray.indexOf("00")-timeArray.indexOf(bedTimeHour))*8;
+    amountToCharge += (timeArray.indexOf(endTimeHour)-timeArray.indexOf("00"))*16;
     document.querySelector('#amountToCharge').innerText = "$"+amountToCharge.toFixed(2);
   }
 
@@ -76,6 +79,10 @@ class CalculatePayForm extends Component {
     let startTimeString = startTime.toString();
     let bedTimeString = bedTime.toString();
     let endTimeString = endTime.toString();
+
+    let startTimeHour = startTimeString.substring(0,2);
+    let bedTimeHour = bedTimeString.substring(0,2);
+    let endTimeHour = endTimeString.substring(0,2);
 
     let alertMessage = "";
     // console.log(startTime); //Logging for testing
@@ -91,25 +98,26 @@ class CalculatePayForm extends Component {
       return false;
     }
     // console.log(timeArray.indexOf(startTime)); //Logging for testing
-    if(timeArray.indexOf(startTimeString.substring(0,2)) === -1 || timeArray.indexOf(startTimeString.substring(0,2)) > timeArray.indexOf(bedTimeString.substring(0,2))){
+    if(timeArray.indexOf(startTimeHour) === -1 || timeArray.indexOf(startTimeHour) > timeArray.indexOf(bedTimeHour)){
       alertMessage += "Start Time must be between 5:00P.M. and Bed Time";
       alert(alertMessage);
       return false;
     }
 
-    if(timeArray.indexOf(bedTimeString.substring(0,2)) === -1 || (timeArray.indexOf(bedTimeString.substring(0,2)) < timeArray.indexOf(startTimeString.substring(0,2)) && timeArray.indexOf(bedTimeString.substring(0,2)) > timeArray.indexOf(endTimeString.substring(0,2)))){
+    if(timeArray.indexOf(bedTimeHour) === -1 ||
+        (timeArray.indexOf(bedTimeHour) < timeArray.indexOf(startTimeHour) && timeArray.indexOf(bedTimeHour) > timeArray.indexOf(endTimeHour))){
       alertMessage += "Bed Time must be between Start Time and End Time";
       alert(alertMessage);
       return false;
     }
 
-    if(timeArray.indexOf(bedTimeString.substring(0,2)) !== -1 && timeArray.indexOf(bedTimeString.substring(0,2)) >= timeArray.indexOf("00")){
+    if(timeArray.indexOf(bedTimeHour) !== -1 && timeArray.indexOf(bedTimeHour) >= timeArray.indexOf("00")){
       alertMessage += "Bed Time must be before Midnight";
       alert(alertMessage);
       return false;
     }
 
-    if(timeArray.indexOf(endTimeString.substring(0,2)) === -1 || (timeArray.indexOf(endTimeString.substring(0,2)) < timeArray.indexOf("00") && timeArray.indexOf(endTimeString.substring(0,2)) > timeArray.indexOf("04"))){
+    if(timeArray.indexOf(endTimeHour) === -1 || (timeArray.indexOf(endTimeHour) < timeArray.indexOf("00") && timeArray.indexOf(endTimeHour) > timeArray.indexOf("04"))){
       alertMessage += "End Time must be between Midnight and 4:00A.M.";
       alert(alertMessage);
       return false;
