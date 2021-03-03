@@ -17,7 +17,7 @@ class CalculatePayForm extends Component {
     //this.amountToCharge = React.createRef(); tried to create ref to update amountToCharge value, found better way with querySelector. Update, did not find a better way
   }
 
-  changeStartTimeField(event){
+  changeStartTimeField(event) {
     console.log(event);
     this.setState({startTime: event});//tartTimeString.substring(0,2)});
   }
@@ -34,13 +34,13 @@ class CalculatePayForm extends Component {
       //document.querySelector('startTimePicker').value = ""; tried to set value to empty, couldn't grab it this way
     //}
 
-  changeBedTimeField(event){
+  changeBedTimeField(event) {
     this.setState({bedTime: event});//bedTimeHour});
     //let bedTimeString = event.toString(); Was going to convert to grab substring, unneeded now
     // console.log(event.toString());
   }
 
-  changeEndTimeField(event){
+  changeEndTimeField(event) {
     this.setState({endTime: event});
   }
     // let endTimeString = event.toString();
@@ -58,13 +58,13 @@ class CalculatePayForm extends Component {
     let bedTimeString = this.state.bedTime.toString();
     let endTimeString = this.state.endTime.toString();
     // console.log(typeof startTime);
-    if(this.validateTimes(startTimeString, bedTimeString, endTimeString)){
+    if(this.validateTimes(startTimeString, bedTimeString, endTimeString)) {
       this.calculatePay(startTimeString, bedTimeString, endTimeString);
     }
   }
 
   //Put this in its own method for easier unit testing
-  calculatePay(startTimeString, bedTimeString, endTimeString){
+  calculatePay(startTimeString, bedTimeString, endTimeString) {
     let amountToCharge = 0;
     let startTimeHour = startTimeString.substring(0,2);
     let bedTimeHour = bedTimeString.substring(0,2);
@@ -100,6 +100,7 @@ class CalculatePayForm extends Component {
       alert(alertMessage);
       return false;
     }
+
     if(timeArray.indexOf(startTimeHour) === -1 || timeArray.indexOf(startTimeHour) > timeArray.indexOf("00")){
       alertMessage = "Start Time must be between 5:00P.M. and Midnight";
       alert(alertMessage);
@@ -112,12 +113,15 @@ class CalculatePayForm extends Component {
       return false;
     }
 
+    //Allowing Bed Time to be midnight here, but no later.
     if(timeArray.indexOf(bedTimeHour) > timeArray.indexOf("00"))
     {
       alertMessage = "Bed Time must be Midnight or earlier";
       alert(alertMessage);
       return false;
     }
+    return true;
+  }
 
     //Validation I got rid of after refactoring
     // if(timeArray.indexOf(bedTimeHour) === -1 || timeArray.indexOf(bedTimeHour) > timeArray.indexOf("00") || timeArray.indexOf(bedTimeHour) <= timeArray.indexOf(startTimeHour)){
@@ -133,20 +137,17 @@ class CalculatePayForm extends Component {
     //   return false;
     // }
 
-    return true;
-  }
-
   render() {
     return (
       <div id="calcPayDiv">
         <form onSubmit={this.submitForm} id="calcPayForm">
-          <div className="timePickerDiv" id="startTimeDiv">Start Time: <TimePicker id="startTimePicker" disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
+          <div className="timePickerDiv" id="startTimeDiv">Start Time: <TimePicker id="startTimePicker" disableClock={true}  clearIcon={null} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
           </div>
           <br/>
-          <div className="timePickerDiv" id="bedTimeDiv">Bed Time: <TimePicker id="bedTimePicker" disableClock={true} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
+          <div className="timePickerDiv" id="bedTimeDiv">Bed Time: <TimePicker id="bedTimePicker" disableClock={true} clearIcon={null} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
           </div>
           <br/>
-          <div className="timePickerDiv" id="endTimeDiv">End Time: <TimePicker id="endTimePicker" disableClock={true} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
+          <div className="timePickerDiv" id="endTimeDiv">End Time: <TimePicker id="endTimePicker" disableClock={true} clearIcon={null} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
           </div>
           <br/>
           <input type="submit" value="Calculate Pay" id="calcPayButton"/>
