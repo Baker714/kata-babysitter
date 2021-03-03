@@ -3,8 +3,8 @@
 This Kata was built entirely using the React Framework.
 
 ## To Run and Test
-npm install\n
-npm start\n
+npm install<br>
+npm start<br>
 npm test
 
 ## Background
