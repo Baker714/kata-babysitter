@@ -1,4 +1,4 @@
-#amountToCharge{
+#amountToCharge {
   font-family: sans-serif;
   text-align: center;
   font-size: 36px;
@@ -10,14 +10,17 @@
 
 #startTimeDiv {
   font-family: sans-serif;
+  font-weight: 600;
 }
 
 #bedTimeDiv {
   font-family: sans-serif;
+  font-weight: 600;
 }
 
 #endTimeDiv {
   font-family: sans-serif;
+  font-weight: 600;
 }
 
 #calcPayDiv {
@@ -35,6 +38,9 @@
 #calcPayButton {
   font-size: 16px;
   background-color: white;
-  border-style: solid;
   border-color: black;
+  font-weight: 600;
+}
+#calcPayButton:focus{
+  background-color: #e6e6e6;
 }

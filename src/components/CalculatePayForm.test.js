@@ -8,7 +8,7 @@ const wrapper = shallow(<CalculatePayForm />);
 
 test('renders calculatePayForm', () => {
   render(<CalculatePayForm />);
-  const startTime = screen.getByText("Start Time");
+  const startTime = screen.getByText(/Start Time/);
   expect(startTime).toBeInTheDocument();
 });
 

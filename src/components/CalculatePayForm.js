@@ -12,7 +12,7 @@ class CalculatePayForm extends Component {
 
   constructor(props){
     super(props);
-    this.state = {startTime: null, bedTime: null, endTime: null, amountToCharge: '0'};
+    this.state = {startTime: "", bedTime: "", endTime: "", amountToCharge: '0'};
     this.calculatePay = this.calculatePay.bind(this);
     //this.amountToCharge = React.createRef(); tried to create ref to update amountToCharge value, found better way with querySelector. Update, did not find a better way
   }
@@ -73,12 +73,12 @@ class CalculatePayForm extends Component {
 
     let alertMessage = "";
     // console.log(startTime); //Logging for testing
-    if(startTime === null || bedTime === null || endTime === null){
+    if(startTime === "" || bedTime === "" || endTime === ""){
       alertMessage += "Please fill in all fields before submitting\n\n";
     }
 
     if(startTimeString.substring(3,5) !== "00" || bedTimeString.substring(3,5) !== "00"  || endTimeString.substring(3,5) !== "00" ){
-      alertMessage += "Please use only full hours\n\n";
+      alertMessage += "Please use only whole hours\n\n";
     }
     // console.log(timeArray.indexOf(startTime)); //Logging for testing
     if(timeArray.indexOf(startTimeString.substring(0,2)) === -1 || timeArray.indexOf(startTimeString.substring(0,2)) > timeArray.indexOf(bedTimeString.substring(0,2))){
