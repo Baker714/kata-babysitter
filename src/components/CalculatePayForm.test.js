@@ -3,6 +3,8 @@ import CalculatePayForm from './CalculatePayForm.js';
 import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure } from 'enzyme';
 
+window.alert = () => {};
+
 configure({adapter: new Adapter()});
 const wrapper = shallow(<CalculatePayForm />);
 
@@ -11,6 +13,13 @@ test('renders calculatePayForm', () => {
   const startTime = screen.getByText(/Start Time/);
   expect(startTime).toBeInTheDocument();
 });
+
+test('calculatePay calculates the correct pay', () => {
+  render(<CalculatePayForm />);
+  wrapper.instance().calculatePay("17:00", "22:00", "04:00");
+  const amountToCharge = document.querySelector('#amountToCharge').innerText;
+  expect(amountToCharge).toBe("$140.00");
+})
 
 test('validateTimes tells me everythings right', () => {
   expect(wrapper.instance().validateTimes("17:00", "20:00", "04:00")).toBe(true);

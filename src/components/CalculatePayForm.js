@@ -13,7 +13,7 @@ class CalculatePayForm extends Component {
   constructor(props){
     super(props);
     this.state = {startTime: "", bedTime: "", endTime: "", amountToCharge: '0'};
-    this.calculatePay = this.calculatePay.bind(this);
+    this.submitForm = this.submitForm.bind(this);
     //this.amountToCharge = React.createRef(); tried to create ref to update amountToCharge value, found better way with querySelector. Update, did not find a better way
   }
 
@@ -48,9 +48,8 @@ class CalculatePayForm extends Component {
     //   alert("End Time must be before 4:00A.M.");
     // else
 
-  calculatePay(event) {
+  submitForm(event) {
     event.preventDefault();
-    let amountToCharge = 0;
     // let startTime = this.state.startTime;
     // let bedTime = this.state.bedTime;
     // let endTime = this.state.endTime;
@@ -59,11 +58,18 @@ class CalculatePayForm extends Component {
     let endTimeString = this.state.endTime.toString();
     // console.log(typeof startTime);
     if(this.validateTimes(startTimeString, bedTimeString, endTimeString)){
-      amountToCharge += (timeArray.indexOf(bedTimeString.substring(0,2))-timeArray.indexOf(startTimeString.substring(0,2)))*12;
-      amountToCharge += (timeArray.indexOf("00")-timeArray.indexOf(bedTimeString.substring(0,2)))*8;
-      amountToCharge += (timeArray.indexOf(endTimeString.substring(0,2))-timeArray.indexOf("00"))*16;
-      document.querySelector('#amountToCharge').innerText = "$"+amountToCharge.toFixed(2);
+      this.calculatePay(startTimeString, bedTimeString, endTimeString);
     }
+  }
+
+  //Put this in its own method for easier unit testing
+  calculatePay(startTimeString, bedTimeString, endTimeString){
+    let amountToCharge = 0;
+
+    amountToCharge += (timeArray.indexOf(bedTimeString.substring(0,2))-timeArray.indexOf(startTimeString.substring(0,2)))*12;
+    amountToCharge += (timeArray.indexOf("00")-timeArray.indexOf(bedTimeString.substring(0,2)))*8;
+    amountToCharge += (timeArray.indexOf(endTimeString.substring(0,2))-timeArray.indexOf("00"))*16;
+    document.querySelector('#amountToCharge').innerText = "$"+amountToCharge.toFixed(2);
   }
 
   validateTimes(startTime, bedTime, endTime) {
@@ -107,7 +113,7 @@ class CalculatePayForm extends Component {
   render() {
     return (
       <div id="calcPayDiv">
-        <form onSubmit={this.calculatePay} id="calcPayForm">
+        <form onSubmit={this.submitForm} id="calcPayForm">
           <div id="startTimeDiv">Start Time: <TimePicker id="startTimePicker" disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
           </div>
           <br/>
