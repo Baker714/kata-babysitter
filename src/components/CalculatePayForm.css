@@ -33,6 +33,6 @@
   border-color: black;
   font-weight: 600;
 }
-#calcPayButton:focus{
-  background-color: #e6e6e6;
+#calcPayButton:active{
+  background-color: #cccccc;
 }

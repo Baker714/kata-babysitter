@@ -18,6 +18,7 @@ class CalculatePayForm extends Component {
   }
 
   changeStartTimeField(event){
+    console.log(event);
     this.setState({startTime: event});//tartTimeString.substring(0,2)});
   }
     //let startTimeString = event.toString(); Was going to grab only substring to account for half hours, going to do that in the calculatePay method now
@@ -34,9 +35,9 @@ class CalculatePayForm extends Component {
     //}
 
   changeBedTimeField(event){
+    this.setState({bedTime: event});//bedTimeHour});
     //let bedTimeString = event.toString(); Was going to convert to grab substring, unneeded now
     // console.log(event.toString());
-    this.setState({bedTime: event});//bedTimeHour});
   }
 
   changeEndTimeField(event){
@@ -75,18 +76,14 @@ class CalculatePayForm extends Component {
     document.querySelector('#amountToCharge').innerText = "$"+amountToCharge.toFixed(2);
   }
 
-  validateTimes(startTime, bedTime, endTime) {
-    let startTimeString = startTime.toString();
-    let bedTimeString = bedTime.toString();
-    let endTimeString = endTime.toString();
-
+  validateTimes(startTimeString, bedTimeString, endTimeString) {
     let startTimeHour = startTimeString.substring(0,2);
     let bedTimeHour = bedTimeString.substring(0,2);
     let endTimeHour = endTimeString.substring(0,2);
 
     let alertMessage = "";
     // console.log(startTime); //Logging for testing
-    if(startTime === "" || bedTime === "" || endTime === ""){
+    if(startTimeString === "" || bedTimeString === "" || endTimeString === ""){
       alertMessage += "Please fill in all fields before submitting";
       alert(alertMessage);
       return false;
@@ -94,12 +91,6 @@ class CalculatePayForm extends Component {
 
     if(startTimeString.substring(3,5) !== "00" || bedTimeString.substring(3,5) !== "00"  || endTimeString.substring(3,5) !== "00" ){
       alertMessage += "Please use only whole hours";
-      alert(alertMessage);
-      return false;
-    }
-    // console.log(timeArray.indexOf(startTime)); //Logging for testing
-    if(timeArray.indexOf(startTimeHour) === -1 || timeArray.indexOf(startTimeHour) > timeArray.indexOf(bedTimeHour)){
-      alertMessage += "Start Time must be between 5:00P.M. and Bed Time";
       alert(alertMessage);
       return false;
     }
@@ -119,6 +110,12 @@ class CalculatePayForm extends Component {
 
     if(timeArray.indexOf(endTimeHour) === -1 || (timeArray.indexOf(endTimeHour) < timeArray.indexOf("00") && timeArray.indexOf(endTimeHour) > timeArray.indexOf("04"))){
       alertMessage += "End Time must be between Midnight and 4:00A.M.";
+      alert(alertMessage);
+      return false;
+    }
+    // console.log(timeArray.indexOf(startTime)); //Logging for testing
+    if(timeArray.indexOf(startTimeHour) === -1 || timeArray.indexOf(startTimeHour) > timeArray.indexOf(bedTimeHour)){
+      alertMessage += "Start Time must be between 5:00P.M. and Bed Time";
       alert(alertMessage);
       return false;
     }
