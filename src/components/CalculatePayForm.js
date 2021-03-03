@@ -70,9 +70,9 @@ class CalculatePayForm extends Component {
     let bedTimeHour = bedTimeString.substring(0,2);
     let endTimeHour = endTimeString.substring(0,2);
 
-    amountToCharge += (timeArray.indexOf(bedTimeHour)-timeArray.indexOf(startTimeHour))*12;
-    amountToCharge += (timeArray.indexOf("00")-timeArray.indexOf(bedTimeHour))*8;
-    amountToCharge += (timeArray.indexOf(endTimeHour)-timeArray.indexOf("00"))*16;
+    amountToCharge += Math.abs((timeArray.indexOf(bedTimeHour)-timeArray.indexOf(startTimeHour)))*12;
+    amountToCharge += Math.abs((timeArray.indexOf("00")-timeArray.indexOf(bedTimeHour)))*8;
+    amountToCharge += Math.abs((timeArray.indexOf(endTimeHour)-timeArray.indexOf("00")))*16;
     document.querySelector('#amountToCharge').innerText = "$"+amountToCharge.toFixed(2);
   }
 
@@ -84,41 +84,54 @@ class CalculatePayForm extends Component {
     let alertMessage = "";
     // console.log(startTime); //Logging for testing
     if(startTimeString === "" || bedTimeString === "" || endTimeString === ""){
-      alertMessage += "Please fill in all fields before submitting";
+      alertMessage = "Please fill in all fields before submitting";
       alert(alertMessage);
       return false;
     }
 
     if(startTimeString.substring(3,5) !== "00" || bedTimeString.substring(3,5) !== "00"  || endTimeString.substring(3,5) !== "00" ){
-      alertMessage += "Please use only whole hours";
+      alertMessage = "Please use only whole hours";
       alert(alertMessage);
       return false;
     }
 
-    if(timeArray.indexOf(bedTimeHour) === -1 ||
-        (timeArray.indexOf(bedTimeHour) < timeArray.indexOf(startTimeHour) && timeArray.indexOf(bedTimeHour) > timeArray.indexOf(endTimeHour))){
-      alertMessage += "Bed Time must be between Start Time and End Time";
+    if(timeArray.indexOf(endTimeHour) === -1 || timeArray.indexOf(endTimeHour) < timeArray.indexOf("00")){
+      alertMessage = "End Time must be between Midnight and 4:00A.M.";
+      alert(alertMessage);
+      return false;
+    }
+    if(timeArray.indexOf(startTimeHour) === -1 || timeArray.indexOf(startTimeHour) > timeArray.indexOf("00")){
+      alertMessage = "Start Time must be between 5:00P.M. and Midnight";
       alert(alertMessage);
       return false;
     }
 
-    if(timeArray.indexOf(bedTimeHour) !== -1 && timeArray.indexOf(bedTimeHour) >= timeArray.indexOf("00")){
-      alertMessage += "Bed Time must be before Midnight";
+    if(!(timeArray.indexOf(startTimeHour) < timeArray.indexOf(bedTimeHour) && timeArray.indexOf(bedTimeHour < timeArray.indexOf(endTimeHour)))){
+      alertMessage = "Bed Time must be between Start Time and End Time";
       alert(alertMessage);
       return false;
     }
 
-    if(timeArray.indexOf(endTimeHour) === -1 || (timeArray.indexOf(endTimeHour) < timeArray.indexOf("00") && timeArray.indexOf(endTimeHour) > timeArray.indexOf("04"))){
-      alertMessage += "End Time must be between Midnight and 4:00A.M.";
+    if(timeArray.indexOf(bedTimeHour) > timeArray.indexOf("00"))
+    {
+      alertMessage = "Bed Time must be Midnight or earlier";
       alert(alertMessage);
       return false;
     }
+
+    //Validation I got rid of after refactoring
+    // if(timeArray.indexOf(bedTimeHour) === -1 || timeArray.indexOf(bedTimeHour) > timeArray.indexOf("00") || timeArray.indexOf(bedTimeHour) <= timeArray.indexOf(startTimeHour)){
+    //   alertMessage = "Bed Time must be between Start Time and Midnight";
+    //   alert(alertMessage);
+    //   return false;
+    // }
     // console.log(timeArray.indexOf(startTime)); //Logging for testing
-    if(timeArray.indexOf(startTimeHour) === -1 || timeArray.indexOf(startTimeHour) > timeArray.indexOf(bedTimeHour)){
-      alertMessage += "Start Time must be between 5:00P.M. and Bed Time";
-      alert(alertMessage);
-      return false;
-    }
+
+    // if(timeArray.indexOf(bedTimeHour) === -1 || timeArray.indexOf(bedTimeHour) <= timeArray.indexOf(startTimeHour) || timeArray.indexOf(bedTimeHour) >= timeArray.indexOf(endTimeHour)){
+    //   alertMessage = "Bed Time must be between Start Time and End Time";
+    //   alert(alertMessage);
+    //   return false;
+    // }
 
     return true;
   }
@@ -139,7 +152,8 @@ class CalculatePayForm extends Component {
           <input type="submit" value="Calculate Pay" id="calcPayButton"/>
         </form>
         <br/>
-        <div id="amountToCharge"></div>
+        <div id="amountToCharge">
+        </div>
       </div>
     )
   }
