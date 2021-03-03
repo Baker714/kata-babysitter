@@ -137,6 +137,7 @@ class CalculatePayForm extends Component {
     //   return false;
     // }
 
+  //Removed clearIcon from TimePicker to prevent defect, removed clock visual for friendlier UI
   render() {
     return (
       <div id="calcPayDiv">
