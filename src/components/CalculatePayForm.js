@@ -80,33 +80,41 @@ class CalculatePayForm extends Component {
     let alertMessage = "";
     // console.log(startTime); //Logging for testing
     if(startTime === "" || bedTime === "" || endTime === ""){
-      alertMessage += "Please fill in all fields before submitting\n\n";
-    }
-
-    if(startTimeString.substring(3,5) !== "00" || bedTimeString.substring(3,5) !== "00"  || endTimeString.substring(3,5) !== "00" ){
-      alertMessage += "Please use only whole hours\n\n";
-    }
-    // console.log(timeArray.indexOf(startTime)); //Logging for testing
-    if(timeArray.indexOf(startTimeString.substring(0,2)) === -1 || timeArray.indexOf(startTimeString.substring(0,2)) > timeArray.indexOf(bedTimeString.substring(0,2))){
-      alertMessage += "Start Time must be between 5:00P.M. and Bed Time\n\n";
-    }
-
-    if(timeArray.indexOf(bedTimeString.substring(0,2)) === -1 || (timeArray.indexOf(bedTimeString.substring(0,2)) < timeArray.indexOf(startTimeString.substring(0,2)) && timeArray.indexOf(bedTimeString.substring(0,2)) > timeArray.indexOf(endTimeString.substring(0,2)))){
-      alertMessage += "Bed Time must be between Start Time and End Time\n\n";
-    }
-
-    if(timeArray.indexOf(bedTimeString.substring(0,2)) !== -1 && timeArray.indexOf(bedTimeString.substring(0,2)) >= timeArray.indexOf("00")){
-      alertMessage += "Bed Time must be before Midnight\n\n";
-    }
-
-    if(timeArray.indexOf(endTimeString.substring(0,2)) === -1 || (timeArray.indexOf(endTimeString.substring(0,2)) < timeArray.indexOf("00") && timeArray.indexOf(endTimeString.substring(0,2)) > timeArray.indexOf("04"))){
-      alertMessage += "End Time must be between Midnight and 4:00A.M.\n\n";
-    }
-
-    if(alertMessage !== ""){
+      alertMessage += "Please fill in all fields before submitting";
       alert(alertMessage);
       return false;
     }
+
+    if(startTimeString.substring(3,5) !== "00" || bedTimeString.substring(3,5) !== "00"  || endTimeString.substring(3,5) !== "00" ){
+      alertMessage += "Please use only whole hours";
+      alert(alertMessage);
+      return false;
+    }
+    // console.log(timeArray.indexOf(startTime)); //Logging for testing
+    if(timeArray.indexOf(startTimeString.substring(0,2)) === -1 || timeArray.indexOf(startTimeString.substring(0,2)) > timeArray.indexOf(bedTimeString.substring(0,2))){
+      alertMessage += "Start Time must be between 5:00P.M. and Bed Time";
+      alert(alertMessage);
+      return false;
+    }
+
+    if(timeArray.indexOf(bedTimeString.substring(0,2)) === -1 || (timeArray.indexOf(bedTimeString.substring(0,2)) < timeArray.indexOf(startTimeString.substring(0,2)) && timeArray.indexOf(bedTimeString.substring(0,2)) > timeArray.indexOf(endTimeString.substring(0,2)))){
+      alertMessage += "Bed Time must be between Start Time and End Time";
+      alert(alertMessage);
+      return false;
+    }
+
+    if(timeArray.indexOf(bedTimeString.substring(0,2)) !== -1 && timeArray.indexOf(bedTimeString.substring(0,2)) >= timeArray.indexOf("00")){
+      alertMessage += "Bed Time must be before Midnight";
+      alert(alertMessage);
+      return false;
+    }
+
+    if(timeArray.indexOf(endTimeString.substring(0,2)) === -1 || (timeArray.indexOf(endTimeString.substring(0,2)) < timeArray.indexOf("00") && timeArray.indexOf(endTimeString.substring(0,2)) > timeArray.indexOf("04"))){
+      alertMessage += "End Time must be between Midnight and 4:00A.M.";
+      alert(alertMessage);
+      return false;
+    }
+
     return true;
   }
 
@@ -114,13 +122,13 @@ class CalculatePayForm extends Component {
     return (
       <div id="calcPayDiv">
         <form onSubmit={this.submitForm} id="calcPayForm">
-          <div id="startTimeDiv">Start Time: <TimePicker id="startTimePicker" disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
+          <div className="timePickerDiv" id="startTimeDiv">Start Time: <TimePicker id="startTimePicker" disableClock={true} value={this.state.startTime} onChange={this.changeStartTimeField.bind(this)}/>
           </div>
           <br/>
-          <div id="bedTimeDiv">Bed Time: <TimePicker id="bedTimePicker" disableClock={true} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
+          <div className="timePickerDiv" id="bedTimeDiv">Bed Time: <TimePicker id="bedTimePicker" disableClock={true} value={this.state.bedTime} onChange={this.changeBedTimeField.bind(this)}/>
           </div>
           <br/>
-          <div id="endTimeDiv">End Time: <TimePicker id="endTimePicker" disableClock={true} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
+          <div className="timePickerDiv" id="endTimeDiv">End Time: <TimePicker id="endTimePicker" disableClock={true} value={this.state.endTime} onChange={this.changeEndTimeField.bind(this)}/>
           </div>
           <br/>
           <input type="submit" value="Calculate Pay" id="calcPayButton"/>
